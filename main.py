@@ -31,7 +31,9 @@ def on_key_press(key):
         input_buffer = input_buffer[:-1]
     else:
         input_buffer += key.char
-    print(input_buffer)
+
+    # update the displayed text to the input buffer
+    display_text.configure(text=input_buffer)
 
     # if is alphabetical character check if it corresponds with the same letter in the word, and change color correctly
     if key.char.isalpha():
@@ -76,6 +78,7 @@ def counting():
     # display wpm, unbind Keypress event and return (end counting), if counter hits 0
     if counter == 0:
         text_widget.destroy()
+        display_text.destroy()
         counter_label.destroy()
         tk.Label(app, text=f'WPM: {correct_words}', font=('Helvetica', 15, 'bold')).pack()
 
@@ -97,6 +100,9 @@ app.bind('<KeyPress>', on_key_press)  # binding keypress event
 
 counter_label = tk.Label(app, text='60')
 counter_label.pack()
+
+display_text = tk.Label(app, text='')
+display_text.pack()
 
 text_widget = tk.Text(app, font=('Helvetica', 15, 'bold'))
 text_widget.pack()
